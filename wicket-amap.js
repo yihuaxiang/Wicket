@@ -14,6 +14,20 @@
       });
       opt.path.pop();           // unclosure
       return new AMap.Polygon(opt);
+    },
+
+    multipolygon: function (config) {
+      var opt = config || {};
+      opt.path = this.components.map(item => {
+        return item.map(function(ps) {
+          const path = ps.map(p => {
+            return new AMap.LngLat(p.x, p.y);
+          })
+          path.pop();           // unclosure
+          return path;
+        })
+      });;
+      return new AMap.Polygon(opt);
     }
   };
 
